@@ -1,14 +1,18 @@
-import PropTypes from 'prop-types'
+import { useContext } from 'react'
 import React from "react"
 import {motion , AnimatePresence} from 'framer-motion'
 import FeedbackItem from "./FeedbackItem"
+import FeedbackContext from '../context/FeedbackContext'
 
+//feedback,handledelete prop removed from function available in previous versions
+function FeedbackList() {
 
-function FeedbackList({feedback, handleDelete}) {
+    const {feedback} = useContext(FeedbackContext)
     if(!feedback || feedback.length === 0){
         return <p>No Feedback Yet</p>
     }
-    return <div className="feedback-list">
+    return (
+    <div className="feedback-list">
             <AnimatePresence>
         {feedback.map((item) =>(
             // <div> {item.rating}
@@ -21,21 +25,14 @@ function FeedbackList({feedback, handleDelete}) {
         >
             <FeedbackItem key={item.id} 
             item={item}
-             handleDelete ={handleDelete}/>
+             />
              </motion.div>
 
         ) )}
         </AnimatePresence>
     </div>
-  
+    )
 }
-FeedbackList.propTypes = {
-    feedback : PropTypes.arrayOf(
-        PropTypes.shape({
-            id : PropTypes.number.isRequired,
-            text : PropTypes.string.isRequired,
-            rating : PropTypes.number.isRequired,
-})
-    ),
-}
+//get rid of proptypes available in previous versions
+
 export default FeedbackList
